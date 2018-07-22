@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <div class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">用户管理</a>
+            </div>
+            <!--如果用户登录过  显示 首页 个人信息 退出-->
+            <!--如果没有登录过 只能看到首页和登录 强行访问个人信息 跳转到登录页 -->
+            <!--从localStorage 如果有login并且为true 我认为登录过-->
+            <ul class="nav navbar-nav">
+                <li><router-link to="/home">首页</router-link></li>
+                <li v-show="!login"> <router-link to="/login">登录</router-link></li>
+                <li v-show="login">
+                    <router-link to="/profile">个人信息</router-link>
+                </li>
+                <li v-show="login"><a @click="logout">退出</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <router-view @login="checkLogin"></router-view>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-router/dist/vue-router.js"></script>
+<template id="login">
+    <div>
+        <pre>登录页</pre>
+        <button class="btn btn-primary" @click="login">登录</button>
+    </div>
+</template>
+<template id="home">
+    <div>首页
+        <slider :data="imgArrs"></slider>
+    </div>
+</template>
+<template id="slider">
+    <div class="slider">
+        <img :src="data[index]" alt="">
+        <div class="slider-btn">
+            <span @click="go(prev)">&lt;</span>
+            <span @click="go(next)">&gt;</span>
+        </div>
+        <div class="slider-mask">
+            <span v-for="(dot,index) in data" @click="go(index)">{{index+1}}</span>
+        </div>
+    </div>
+</template>
+<style>
+    .slider{width: 520px;height: 280px;position: relative}
+    .slider-btn span{position: absolute;width: 30px;height:60px;top:110px;background: #fff;line-height: 60px;text-align: center }
+    .slider-btn span:nth-child(1){left: 10px}
+    .slider-btn span:nth-child(2){right: 10px}
+    .slider-mask{background: rgba(0,0,0,.4);position: absolute;bottom: 0;left: 0;width: 100%;height: 40px;line-height: 40px;color:#fff;text-align: right;}
+    .slider-mask span{padding:0 10px;cursor: pointer}
+</style>
+<template id="profile">
+    <div>
+        <div class="col-md-4">
+            <ul class="nav nav-stacked">
+                <li><router-link to="/profile/info">个人信息</router-link></li>
+                <li><router-link to="/profile/about">关于我</router-link></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <router-view></router-view>
+        </div>
+    </div>
+</template>
+<script>
+    let slider = {
+        template:'#slider',
+        computed:{
+            prev(){
+                let p = this.index - 1;
+                if(p === -1){
+                    p = this.data.length-1;
+                }
+                return p;
+            },
+            next(){
+                let n = this.index + 1;
+                if(n === this.data.length){
+                    n = 0;
+                }
+                return n;
+            },
+        },
+        data(){
+            return {index:0}
+        },
+        methods:{
+          go(i){
+              this.index = i;
+          }
+        },
+        props: ['data']//data就会挂在在slider的实例上
+    };
+    let Home  = {
+        template:'#home',
+        data(){
+            return {imgArrs:['1.jpg','2.jpg','3.jpg']}
+        },
+        components:{
+            slider
+        },
+        created(){ //先跳转页面不管数据是否获取到
+
+        },
+        beforeRouteEnter:(to,from,next)=>{
+            //在这里可以做ajax调用，当数据获取成功 在调next，防止用户看到白页
+            setTimeout(()=>{
+                next();
+            },4000);
+        }
+    };
+    let Login  = {
+        template:'#login',
+        methods:{
+            login(){
+                localStorage.setItem('login',true);//将本地数据 改成登录完成
+                //更改后导航并没有实现改变,更改父亲的逻辑 ，让其变成login:true
+                this.$emit('login');
+                this.$router.push('/home');//跳转到登录页
+            }
+        }
+    };
+    let Profile = {template:'#profile'};
+    let Info = {template:'<div>个人信息</div>'};
+    let About = {template:'<div>关于我</div>'};
+    let routes = [
+        {path:'/home',component:Home,
+           /* beforeEnter:(to,from,next)=>{ //只针对某个路径
+                alert('进入了首页')
+            }*/
+        },
+        {path:'/login',component:Login},
+        {
+            path:'/profile',
+            component:Profile,
+            children:[
+                {path:'about',component:About},
+                {path:'info',component:Info},
+            ],
+            meta:{needLogin:true}//设置这个路由 是需要认证的，仅仅是备注一下，没有实现抵挡的功能
+        },
+    ];
+    let router = new VueRouter({
+        routes
+    });
+    //全局的方法 可以监控任意一个路径的更新
+    router.beforeEach((to,from,next)=>{ //next是一个函数 如果调用了next 会继续执行，没调用则卡在这个状态上
+        //一般做验证逻辑
+        console.log(to);//应该查找to中的 matched属性 他是一个数组，装着每一个匹配到的路由 /profile /profile/info ,只要有一个 里面meta属性是needLogin 就需要检查一下是否登录，如果登录了,继续，否则跳转到登录页面
+        let flag = to.matched.some(item=>item.meta.needLogin);//有一个true 就表示需要验证
+        if(flag){
+            let status = localStorage.getItem('login')||'';
+            if(status === 'true'){
+                next();
+            }else{
+                next({path:'/login'}); //重定向
+            }
+        }else{
+            next(); //不需要验证登录
+        }
+    });
+    let vm = new Vue({
+        el:'#app',
+        router,
+        data:{
+          login:false
+        },
+        methods:{
+            checkLogin(){ //检测是否登录
+               let flag = localStorage.getItem('login')||'';
+               if(flag === 'true'){
+                   this.login = true;
+               }else{
+                   this.login = false;
+               }
+            },
+            logout(){
+                localStorage.clear('login');
+                this.login = false;
+                this.$router.push('/home')
+            }
+        },
+        created(){
+            //检查是否登录
+            this.checkLogin();
+        }
+    })
+</script>
+</body>
+</html>

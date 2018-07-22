@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <panel type="success" title="标题1" :has-btn="true" @say="aa">
+        这是内容1
+    </panel>
+    <panel type="warning" :has-btn="false">
+        这是内容2
+    </panel>
+</div>
+<template id="pan">
+    <div class="panel" :class="[sty]">
+        <div class="panel-heading">
+            {{title}}
+        </div>
+        <div class="panel-body">
+            <slot>这是一个普通的面板</slot>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-danger" v-if="hasBtn" @click="say">
+                点我say
+            </button>
+        </div>
+    </div>
+</template>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    let panel = {
+        template:'#pan',
+        computed:{
+            sty(){ //panel-danger
+                return 'panel-'+this.type
+            }
+        },
+        methods:{
+            say(){
+                this.$emit('say',this.title)
+            }
+        },
+        props:{
+            title:{
+                type:String,
+                default:'README.md'
+            },
+            type:{
+                type:String,
+                default:'danger'
+            },
+            hasBtn:{
+                type:Boolean,
+                default:true
+            }
+        }
+    };
+    let vm = new Vue({
+        el:'#app',
+        methods:{
+            aa(data){
+                alert(data);
+            }
+        },
+        components:{
+            panel
+        }
+    })
+</script>
+</body>
+</html>
