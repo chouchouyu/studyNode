@@ -26,4 +26,6 @@ setTimeout(function timeout() {
 // OR
 // 1 'TIMEOUT FIRED' 4 2 3 5 6
 
+//nextTick > setTimeout >setImmediate > readFile
+
 
