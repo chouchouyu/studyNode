@@ -10,6 +10,7 @@ function Person(){
  */
 var p = new Person;
 console.log(p.name);
+
 var p2 = Person.bind({name:'ssddd'});
 var p3 = new p2;
 console.log(p3.name);

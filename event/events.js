@@ -1,6 +1,7 @@
 /**
  * 事件
  * 订阅发布
+ * 
  * ?
  */
 function Person(name){
