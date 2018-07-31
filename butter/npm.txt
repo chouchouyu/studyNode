@@ -1,0 +1,11 @@
+ npm的package.json中的dependencies版本号
+ https://blog.csdn.net/la413972057/article/details/50450335 
+ 
+   npm shrinkwrap锁定版本号
+当npm中有已安装的模块不在depencies字段中
+这时会报错，
+这时我们可以npm prune命令移除所有不在depencies字段
+如果加包名就可以指定移除
+
+npm adduser注册账号
+ 

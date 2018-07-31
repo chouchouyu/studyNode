@@ -27,7 +27,7 @@ jingGoldBell.once('drop',function(){
 
 jingGoldBell.emit('ring');
 jingGoldBell.emit('drop','我');
-jingGoldBell.emit('drop','老人‘);
+jingGoldBell.emit('drop','老人');
 
 //[function function]
 console.log(jingGoldBell.listeners('ring'));
