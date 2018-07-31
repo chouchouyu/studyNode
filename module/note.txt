@@ -1,0 +1,17 @@
+npm search gulp查找
+npm view gulp查看包
+npm install 
+npm install  -g 
+npm config 全局配置 ，例如-g 可以改地址
+npm root -g 查看全局安装路径
+npm config set prefix "d:\global" 修改全局路径
+
+npm list 
+npm list -g 显示全局下的包
+
+npm uninstall XX
+npm uninstall XX -g
+
+npm update XX
+npm uninstall XX -g 
+。。。。
