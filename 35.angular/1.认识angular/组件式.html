@@ -1,0 +1,26 @@
+<html lang=“en” ng-app="module3">
+
+<head>
+<title>组件式</title>
+</head>
+
+
+<script src="../angular.js"></script>
+<script>
+    //模块的名字，依赖的其他模块
+    angular.module('module3',[])
+    .directive('wsmform',function(){
+        return{
+            template:'<form><span red>用户名</span><input name="username"></form>'
+        }
+    })
+</script>
+
+<body>
+    <!-- v -->
+    <wsmform>
+  
+    </wsmform>
+</body>
+
+</html>

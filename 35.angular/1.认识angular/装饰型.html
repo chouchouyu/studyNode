@@ -1,0 +1,51 @@
+<html lang=“en” ng-app="module2">
+
+<head>
+<title>装饰性</title>
+</head>
+
+
+<script src="../angular.js"></script>
+<script>
+    //模块的名字，依赖的其他模块
+    angular.module('module2',[])
+    //定义一个指令 指令名称 指令的调用
+    .directive('red',function(){
+        return {
+            //scope作用域 当前元素本身 
+            //element就是jQuery对象
+            link:function(scope,element){
+                       element.css('color','red');
+                        element.css('border','1px solid red');
+                        // element.on('click',function(){
+                        //     alert(element.html());
+                        // });
+                    }
+                }
+            })
+            .directive('greeting',function($http){
+                return {
+                    link:function(scope,element){
+                        //$.ajax
+                        $http({
+                            url:'local.json',
+                            method:'GET'
+                        }).success(function(data){
+                            
+                            element.html(data.data);
+                        })
+                    }
+                }
+            })
+</script>
+
+<body>
+    <!-- v -->
+    <div  red>
+       hahhah
+                </div>
+   <span   greeting>  world</span> 
+    
+</body>
+
+</html>

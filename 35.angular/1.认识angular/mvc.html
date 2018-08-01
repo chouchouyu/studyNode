@@ -10,10 +10,17 @@
     //模块的名字，依赖的其他模块
     angular.module('module',[])
     //控制器的名字，控制器的定义 scope vm
-    .controller('controller',function($scope){
+    .controller('controller',function($scope,$http){
         console.log($scope);
         $scope.name='scopeName'
         $scope.age= 0;
+        $http({
+            url:'local.json',
+            method:'GET'
+        }).success(function(data){
+            // console.log(data);
+            $scope.name = data.data;
+        });
     })
 </script>
 

@@ -3,3 +3,13 @@ npm install bower -g   自动依赖，分析，j解决冲突
 bower install angular
 bower install bootstrap
 bower install jquery
+
+指令系统
+组件型 包括视图和交互逻辑
+装饰型 为DOM添加功能
+
+依赖注入
+只需要声明要使用的对象，就可以自动得到，不需要自己去创建
+
+单向数据绑定
+双向数据绑定

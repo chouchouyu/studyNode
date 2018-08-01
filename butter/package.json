@@ -1,17 +1,14 @@
 {
   "name": "butter",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "async": "^2.6.1",
-    "mime": "^2.3.1",
-    "mysql": "^2.16.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "async": "^2.6.1"
+  }
 }

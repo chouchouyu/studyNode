@@ -83,4 +83,4 @@ var buf13= concat([buf11,buf12],6);
 function concat(list,length){
     return Buffer.concat(list,length);
 }
-console.log(buf13);
+console.log(buf13);//<Buffer 01 02 03 04 05 06>

@@ -1,0 +1,33 @@
+<html lang=“en” ng-app="module4">
+
+<head>
+<title>双向数据绑定</title>
+</head>
+
+
+<script src="../angular.js"></script>
+<script>
+    //找到ng-app之后，会生成一个￥rootscope
+    // rootscope.name=""
+    angular.module('module4',[])
+    .controller('Ctrl',function($scope){
+        console.log($scope);
+        $scope.change= function(){
+            $scope.name="wsm";
+        }
+    }).controller('parentCtrl',function($scope){
+        $scope.age =6 ;
+    });
+</script>
+
+<body  ng-controller="Ctrl">
+    {{name | uppercase}}
+    <div ng-controller="parentCtrl">
+    {{$parent.age}}
+    <input type="text" ng-model="name">
+   <input type="button" value="改变" ng-click="change()">
+</div>
+   </div>
+</body>
+
+</html>
