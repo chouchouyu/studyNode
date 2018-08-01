@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mvcdemo">
+<head>
+    <meta charset="UTF-8">
+    <title>mvc</title>
+</head>
+<body>
+
+<div ng-controller="Ctr1">
+{{count}}
+<input type="button" value="加1" ng-click="add()">
+</div>
+
+<div ng-controller="Ctr2">
+        {{count}}
+        <input type="button" value="加1" ng-click="add()"> 
+ </div>
+
+</body>
+<script src="../angular.js"></script>
+<script>
+     angular.module('mvcdemo',[])
+    .controller('Ctr1',function($scope,countService){
+        $scope.add = function(){
+            countService.add();
+            $scope.count = countService.count;
+        }
+    }).controller('Ctr2',function($scope,countService){
+        $scope.add = function(){
+            countService.add();
+            $scope.count = countService.count;
+        }
+    }).factory('countService',function(){
+        return{
+            count:0,
+            add:function(){
+                this.count++;
+            }
+        }
+    });
+</script>
+</html>

@@ -13,3 +13,10 @@ bower install jquery
 
 单向数据绑定
 双向数据绑定
+
+过滤器
+filter是用来进行数据格式化的
+lowercase
+uppercase
+
+angular调试工具-batarang
