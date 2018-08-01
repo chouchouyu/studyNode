@@ -1,0 +1,28 @@
+<html lang=“en” ng-app="module">
+
+<head>
+<title>MVVM</title>
+</head>
+
+
+<script src="../angular.js"></script>
+<script>
+    //模块的名字，依赖的其他模块
+    angular.module('module',[])
+    //控制器的名字，控制器的定义 scope vm
+    .controller('controller',function($scope){
+        console.log($scope);
+        $scope.name='scopeName'
+        $scope.age= 0;
+    })
+</script>
+
+<body>
+    <!-- v -->
+    <div ng-controller="controller">
+{{age +1 }}
+        {{name}}
+    </div>
+</body>
+
+</html>

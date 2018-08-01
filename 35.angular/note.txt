@@ -1,0 +1,5 @@
+angular属于mvvm
+npm install bower -g   自动依赖，分析，j解决冲突
+bower install angular
+bower install bootstrap
+bower install jquery
