@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tree">
+<head>
+    <meta charset="UTF-8">
+    <title>tree</title>
+</head>
+<body>
+
+    <div id = 'parent' ng-controller="ParentCtrl">
+        <p>Parent:{{parent}}</p>
+        <div ng-controller="ChildCtrl">
+            <p> Child: {{child}}</p>
+        </div>
+
+        </p>
+    </div>
+ 
+</body>
+<script src="../angular.js"></script>
+<script>
+    
+    window.onload = function(){
+        document.getElementById('parent').addEventListener('click',function(){
+            console.log(this);
+            //angular.element == $
+            var scope =  angular.element(this).data('$scope');
+            console.log(scope);
+            scope.count =  scope.count+1;
+          
+        });
+    }
+    //找到ng-app之后，会生成一个￥rootScope
+    //$rootScope.name = ""
+     angular.module('tree',[])
+    .controller('ParentCtrl',function($scope,$interval){
+        $scope.parent = 'parent';
+        $scope.count = 0;
+        $scope.show = function(){
+            console.log($scope);
+        }
+      
+        $interval(function(){
+            console.log($scope.count);
+        },1000);
+    }).controller('ChildCtrl',function($scope){
+        $scope.child = 'child';
+        $scope.show = function(){
+            console.log($scope);
+        }
+    });
+</script>
+</html>
