@@ -5,7 +5,5 @@ ng-controller指令就是用来定义应用程序控制器，并且同时创建�
 不要在Controller里做数据，过滤和格式化，使用filter过滤器
 控制器之前不要互相直接调用，控制器之前的交互通过事件交互
 
-
-http://docs.ngnice.com/api
-
+http://ngnice.com/?page=2
 Anguar文档
