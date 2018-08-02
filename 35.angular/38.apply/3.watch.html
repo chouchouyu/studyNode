@@ -1,0 +1,64 @@
+<html lang=“en” ng-app="watch">
+
+<head>
+<title>watch</title>
+</head>
+
+
+<script src="../angular.js"></script>
+<script>
+    //模块的名字，依赖的其他模块
+    angular.module('watch',[])
+    //控制器的名字，控制器的定义 scope vm
+    .controller('watchCtrl',function($scope){
+         $scope.age = 100;
+         $scope.$watch('age',function(newVal,oldVal){
+             console.log(newVal,oldVal);
+             if(newVal<18){
+                 alert("too small");
+             }
+         })
+         console.log($scope);
+    }).directive('wsModel',function($timeout){
+        return{
+            link:function(scope,element,attrs){
+                element.on('keypress',function(){
+                   scope.age = element.val();
+                   console.log(scope.age);
+                   //但是这样scope。age改变了但是页面没有改变
+
+//方法二
+                   scope.$apply(function(){
+                       //强制观察者去对比模型是否改动
+                    scope.age = element.val(); 
+                   });
+
+                   //方法三
+                   //apply其他方法也会调用，
+                //    $符号开头的方法
+                $timeout(function(){
+                    scope.age= element.val();
+                },0);
+                });
+
+                //方法四 模块变化apply时执行回调，修改视图的值
+               var watch = scope.$watch('age',function(newVal,oldVal){
+                    if(newVal != oldVal){
+                        element.val(scope.age);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
+<body>
+
+    <div ng-controller="watchCtrl">
+        <input id = "age" type="text" ws-Model="age">
+        {{age}}
+    </div>
+ 
+</body>
+
+</html>
