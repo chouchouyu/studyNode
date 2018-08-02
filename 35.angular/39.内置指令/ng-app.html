@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="module1">
+<head>
+    <meta charset="UTF-8">
+    <title>module</title>
+</head>
+<body>
+<div ng-controller="Ctrl1">
+     {{name}}
+</div>
+
+ <div ng-controller="Ctrl2">
+        {{name}}
+ </div>
+<script src="../angular.js"></script>
+<script>
+
+    angular.module("module1", ['module2'])
+            .controller('Ctrl1', function ($scope) {
+                $scope.name = 'Ctrl1'; 
+            })
+            angular.module("module2", [])
+            .controller('Ctrl2', function ($scope) {
+                $scope.name = 'Ctrl2'; 
+            })
+          
+
+
+</script>
+</body>
+</html>

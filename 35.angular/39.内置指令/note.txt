@@ -1,0 +1,11 @@
+控制器
+ng-controller指令就是用来定义应用程序控制器，并且同时创建了一个新的作用域关联到相应的DOM元素上
+不要复用controller，一个控制器只负责一个视图
+不要在控制器中操作DOM，使用指令
+不要在Controller里做数据，过滤和格式化，使用filter过滤器
+控制器之前不要互相直接调用，控制器之前的交互通过事件交互
+
+
+http://docs.ngnice.com/api
+
+Anguar文档
