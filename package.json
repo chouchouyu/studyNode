@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config-lite": "^2.1.0",
     "karma": "^2.0.5",
     "mime": "^2.3.1"
   },
